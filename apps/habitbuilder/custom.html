@@ -32,9 +32,11 @@
           return;
         }
 
+        console.log(questions);
+
         sendCustomizedApp({
           storage:[
-            {name:"habitbuilder.json", content: JSON.stringify({ questions })},
+            {name:"habitbuilder.settings.json", content:JSON.stringify(questions)},
           ]
         });
       });

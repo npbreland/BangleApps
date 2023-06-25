@@ -11,5 +11,11 @@
   "storage": [
     {"name":"habitbuilder.app.js","url":"app.js"},
     {"name":"habitbuilder.img","url":"app-icon.js","evaluate":true}
+  ],
+  "data": [
+    {"name":"habitbuilder.json",
+    "url":"",
+    "storageFile":true
+    }
   ]
 }

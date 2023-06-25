@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="../../css/spectre.min.css">
+  </head>
+  <body>
+    Choose up to 5 yes/no questions to ask yourself each day. You will be able 
+    to change these later in the App Loader.
+
+    <p>Question 1: <input type="text" class="question" id="question1" class="form-input" value="" placeholder="Ex. Did you exercise today?"></p>
+    <p>Question 2: <input type="text" class="question" id="question2" class="form-input" value=""></p>
+    <p>Question 3: <input type="text" class="question" id="question3" class="form-input" value=""></p>
+    <p>Question 4: <input type="text" class="question" id="question4" class="form-input" value=""></p>
+    <p>Question 5: <input type="text" class="question" id="question5" class="form-input" value=""></p>
+    <p><button id="upload" class="btn btn-primary">Upload</button></p>
+
+    <script src="../../core/lib/customize.js"></script>
+
+    <script>
+      // When the 'upload' button is clicked...
+      document.getElementById("upload").addEventListener("click", function() {
+        const questions = [];
+
+        const questionInputs = document.getElementsByClassName("question");
+        questionInputs.forEach((input) => {
+          if (input.value) {
+            questions.push(input.value);
+          }
+        });
+
+        if (questions.length === 0) {
+          alert("Please enter at least one question.");
+          return;
+        }
+
+        sendCustomizedApp({
+          storage:[
+            {name:"habitbuilder.json", content: JSON.stringify({ questions })},
+          ]
+        });
+      });
+
+    </script>
+  </body>
+</html>

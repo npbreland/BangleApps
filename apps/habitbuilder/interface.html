@@ -19,7 +19,6 @@ function disableFormInput() {
   document.querySelectorAll(".btn").forEach(el => el.disabled = true);
 }
 
-/*
 function getData() {
   // show loading window
   Util.showModal("Loading...");
@@ -94,11 +93,7 @@ function getData() {
 
 // Called when app starts
 function onInit() {
-  Util.readStorage(FILENAME, data => {
-    console.log(data);
-  });
-
-  //getData();
+  getData();
 }
     </script>
   </body>

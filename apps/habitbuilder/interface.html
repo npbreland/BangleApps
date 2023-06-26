@@ -3,16 +3,15 @@
     <link rel="stylesheet" href="../../css/spectre.min.css">
   </head>
   <body>
-    <div id="questions"></div>
+    <div id="settings"></div>
     <button class="btn btn-default" id="btnSave">Save</button>
-    <button class="btn btn-default" id="btnDelete">Delete</button>
 
     <script src="../../core/lib/interface.js"></script>
+    <script src="settings-form.js"></script>
     <script>
 
 const FILENAME = "habitbuilder.settings.json";
-const questionsElement = document.getElementById("questions");
-let questions = {};
+const settingsElement = document.getElementById("settings");
 
 function disableFormInput() {
   document.querySelectorAll(".form-input").forEach(el => el.disabled = true);
@@ -23,67 +22,20 @@ function getData() {
   // show loading window
   Util.showModal("Loading...");
   Util.readStorage(FILENAME, data=>{
-    questions = JSON.parse(data || "[]");
+    const settings = JSON.parse(data || "[]");
 
     // remove window
     Util.hideModal();
 
-    questions.forEach((question, i) => {
-      const divColumn = document.createElement("div");
-      divColumn.classList.add('columns');
+    // build settings form
+    settingsHtml = buildSettingsForm(settings.questions, settings.reminderTime);
+    settingsElement.innerHTML = settingsHtml;
 
-      const divColumn1 = document.createElement("div");
-      divColumn1.classList.add('column');
-      divColumn1.classList.add('col-9');
-
-      const textarea = document.createElement("textarea");
-      textarea.id = "question" + i;
-      textarea.classList.add('form-input');
-      textarea.rows = 3;
-      textarea.value = question.question;
-      divColumn1.appendChild(textarea);
-      divColumn.appendChild(divColumn1);
-
-      const divColumn2 = document.createElement("div");
-      divColumn2.classList.add('column');
-      divColumn2.classList.add('col-3');
-
-      const buttonSave = document.createElement("button");
-      buttonSave.textContent = "Save";
-      buttonSave.classList.add('btn');
-      buttonSave.classList.add('btn-default');
-      buttonSave.onclick = function() {
-        questions[i].question = textarea.value;
-        disableFormInput();
-        Util.writeStorage(FILENAME, JSON.stringify(questions), () => {
-          location.reload(); // reload so we see current data
-        });
-      }
-      divColumn2.appendChild(buttonSave);
-
-      const buttonDelete = document.createElement("button");
-      buttonDelete.classList.add('btn');
-      buttonDelete.textContent = "Delete";
-      buttonDelete.onclick = function() {
-        questions[i].question = textarea.value;
-        questions.splice(i, 1);
-        disableFormInput();
-        Util.writeStorage(FILENAME, JSON.stringify(questions), () => {
-          location.reload(); // reload so we see current data
-        });
-      }
-      divColumn2.appendChild(buttonDelete);
-      divColumn.appendChild(divColumn2);
-
-      questionsElement.prepend(document.createElement("hr"));
-      questionsElement.prepend(divColumn);
-    });
-
-    document.getElementById("btnAdd").addEventListener("click", function() {
-      const question = document.getElementById("question-new").value;
-      questions.push({"question": question});
+    document.getElementById("btnSave").addEventListener("click", function() {
+      // Get questions
+      const settings = getSettingsFromForm();
       disableFormInput();
-      Util.writeStorage(FILENAME, JSON.stringify(questions), () => {
+      Util.writeStorage(FILENAME, JSON.stringify(settings), () => {
         location.reload(); // reload so we see current data
       });
     });

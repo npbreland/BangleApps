@@ -6,47 +6,30 @@
     Choose up to 5 yes/no questions to ask yourself each day, and a time to be 
     notified. You will be able to change these settings later in the App Loader.
     <br><br>
-    <p>Question 1 <input type="text" id="question1" class="form-input question" value="" placeholder="Ex. Did you exercise today?"></p>
-    <p>Question 2 <input type="text" id="question2" class="form-input question" value=""></p>
-    <p>Question 3 <input type="text" id="question3" class="form-input question" value=""></p>
-    <p>Question 4 <input type="text" id="question4" class="form-input question" value=""></p>
-    <p>Question 5 <input type="text" id="question5" class="form-input question" value=""></p>
-    <br>
-    <p>Time you will be notified to record your answers <input type="time" id="reminder-time" class="form-input" value=""></p>
+    <div id="settings"></div>
     <p><button id="upload" class="btn btn-primary">Upload</button></p>
 
     <script src="../../core/lib/customize.js"></script>
+    <script src="settings-form.js"></script>
 
     <script>
+      const settingsElement = document.getElementById("settings");
+      settingsElement.innerHTML = buildSettingsForm();
+
       // When the 'upload' button is clicked...
       document.getElementById("upload").addEventListener("click", function() {
-        const questions = [];
 
-        const questionInputs = Array.from(document.getElementsByClassName("question"));
-        questionInputs.forEach(input => {
-          if (input.value) {
-            questions.push(input.value);
-          }
-        });
-
-        if (questions.length === 0) {
-          alert("Please enter at least one question.");
-          return;
-        }
-
-        const reminderTime = document.getElementById("reminder-time").value;
-        if (!reminderTime) {
-          alert("Please enter a reminder time.");
-          return;
-        }
-
-        const content = JSON.stringify({ questions, reminderTime });
+        const settings = getSettingsFromForm();
+        const content = JSON.stringify(settings);
 
         sendCustomizedApp({
           storage:[
             {name:"habitbuilder.settings.json", content },
           ]
         });
+
+        // Reload so that we see the changes and can edit in App Loader
+        location.reload();
       });
 
     </script>

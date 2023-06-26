@@ -7,15 +7,9 @@
   "supports" : ["BANGLEJS2"],  
   "readme": "README.md",
   "interface": "interface.html",
+  "custom": "custom.html",
   "storage": [
     {"name":"habitbuilder.app.js","url":"app.js"},
     {"name":"habitbuilder.img","url":"app-icon.js","evaluate":true}
-  ],
-  "data": [
-    {"name":"habitbuilder.data.json",
-    "storageFile":true,
-    "url":"",
-    "content": {"questions":[]}
-    }
   ]
 }

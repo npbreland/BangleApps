@@ -1,4 +1,10 @@
 // place your const, vars, functions or classes here
+const storage = require("Storage");
+const FILENAME = "habitbuilder.json";
+
+if (!storage.read(FILENAME)) {
+  storage.writeJSON(FILENAME, {});
+}
 
 // clear the screen
 g.clear();

@@ -8,7 +8,7 @@ function buildSettingsForm(questions = [], reminderTime = "") {
 
   settingsHtml += `<p>Reminder time <input type="time" id="remindertime" class="form-input" value="${reminderTime}"></p>`;
   return settingsHtml;
-};
+}
 
 function getSettingsFromForm() {
   const questions = [];

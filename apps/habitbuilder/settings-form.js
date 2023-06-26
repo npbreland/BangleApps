@@ -12,7 +12,7 @@ function buildSettingsForm(questions = [], reminderTime = "") {
 
 function getSettingsFromForm() {
   const questions = [];
-  for (let i = 0; i < 5; i++) {
+  for (let i = 1; i <= 5; i++) {
     questions.push(document.getElementById(`question${i}`).value);
   }
   const reminderTime = document.getElementById("remindertime").value;

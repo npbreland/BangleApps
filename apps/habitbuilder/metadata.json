@@ -12,7 +12,7 @@
     {"name":"habitbuilder.img","url":"app-icon.js","evaluate":true}
   ],
   "data": [
-    {"name":"habitbuilder.json",
+    {"name":"habitbuilder.data.json",
     "url":"",
     "storageFile":true
     }

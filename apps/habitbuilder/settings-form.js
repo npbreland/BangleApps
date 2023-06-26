@@ -19,12 +19,12 @@ function getSettingsFromForm() {
 
   if (questions.length === 0) {
     alert("Please enter at least one question.");
-    return;
+    return false;
   }
 
   if (!reminderTime) {
     alert("Please enter a reminder time.");
-    return;
+    return false;
   }
 
   return { questions, reminderTime };

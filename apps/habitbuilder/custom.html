@@ -20,6 +20,9 @@
       document.getElementById("upload").addEventListener("click", function() {
 
         const settings = getSettingsFromForm();
+        if (!settings) {
+          return;
+        }
         const content = JSON.stringify(settings);
 
         sendCustomizedApp({

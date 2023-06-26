@@ -35,6 +35,9 @@ function getData() {
     document.getElementById("btnSave").addEventListener("click", function() {
       // Get questions
       const settings = getSettingsFromForm();
+      if (!settings) {
+        return;
+      }
       disableFormInput();
       Util.writeStorage(FILENAME, JSON.stringify(settings), () => {
         location.reload(); // reload so we see current data

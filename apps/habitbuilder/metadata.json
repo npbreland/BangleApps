@@ -15,8 +15,7 @@
     {"name":"habitbuilder.data.json",
     "storageFile":true,
     "url":"",
-    "content": { "questions": [] },
-    "evaluate": true
+    "content": {"questions":[]}
     }
   ]
 }

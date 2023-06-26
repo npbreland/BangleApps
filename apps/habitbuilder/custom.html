@@ -11,6 +11,8 @@
     <p>Question 3 <input type="text" id="question3" class="form-input question" value=""></p>
     <p>Question 4 <input type="text" id="question4" class="form-input question" value=""></p>
     <p>Question 5 <input type="text" id="question5" class="form-input question" value=""></p>
+    <br>
+    <p>Time you will be notified to record your answers <input type="time" id="reminder-time" class="form-input" value=""></p>
     <p><button id="upload" class="btn btn-primary">Upload</button></p>
 
     <script src="../../core/lib/customize.js"></script>
@@ -32,13 +34,17 @@
           return;
         }
 
-        console.log(questions);
-        const content = JSON.stringify(questions);
-        console.log(content);
+        const reminderTime = document.getElementById("reminder-time").value;
+        if (!reminderTime) {
+          alert("Please enter a reminder time.");
+          return;
+        }
+
+        const content = JSON.stringify({ questions, reminderTime });
 
         sendCustomizedApp({
           storage:[
-            {name:"habitbuilder.settings.json", content:JSON.stringify(questions)},
+            {name:"habitbuilder.settings.json", content },
           ]
         });
       });

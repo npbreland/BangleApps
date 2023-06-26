@@ -13,14 +13,6 @@ Graphics.prototype.setFontMichroma16 = function(scale) {
 g.setFontCustom(atob("AAAAGAAYAAAAGAB4A/APwD4AeADgAAAAAAA/8H/4YBjAGMAcwBzAHMAcwBzAHMAYYBh/+D/wAAAAABgAOABwAGAA//h/+AAAAAA4+Hn4YZjhmMOYw5jDmMMYwxjDGOMYYxh/GD4YAAAAADBwcHhgGOAYwBzHHMccxxzHHMcc5xhnGH/4PfAAAAAAAOAB4APgB2AGYAxgHGA4YDBgYGD/+P/4AOAAYAAAAAD+cP547BjsGOwc7BzsHOwc7BzsHOwY7zjv+APgAAAAAD/wf/hmGOYYxhzGHMYcxhzGHOYYZhh3uDP4AeAAAEAA4ADgAOAI4DjgeODw4eDjgOcA7gD8APgA8AAAAAAAAAA58H/4bxjmGMYcxhzGHMYcxhzGHOYYbxh/+DnwAAAAADxgfnBnOOMYwxjDHMMcwxzDHMMY4xhjOH/4P/AAAAAABnAGcAAA"), 46, atob("BAgQCBAQEBAQEBAQBA=="), 16+(scale<<8)+(1<<16));
 };
 
-function showWelcomeMessage() {
-  g.reset().clearRect(0, 76, 44+44, g.getHeight()/2+6);
-  g.setFontAlign(0, 0).setFont("6x8");
-  g.drawString("Tap right to", 44, 80);
-  g.drawString("start timer", 44, 88);
-  setTimeout(function(){ g.reset().clearRect(0, 76, 44+44, g.getHeight()/2+6); }, 8000);
-}
-
 // time
 var offsets = require("Storage").readJSON("daylightworldclock.settings.json") || [ ["PAR",1], ["TYO",9] ];
 var drawTimeout;
@@ -84,4 +76,3 @@ draw();
 Bangle.setUI("clock");
 Bangle.loadWidgets();
 Bangle.drawWidgets();
-showWelcomeMessage();

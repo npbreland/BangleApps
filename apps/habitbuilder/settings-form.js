@@ -27,10 +27,15 @@ function getSettingsFromForm() {
     return false;
   }
 
-  return { questions, reminderTime };
+  return { questions, reminderTime: getMsFromMidnight(reminderTime) };
 }
 
 function questionComponent(question, i) {
   return `<p>Question ${i+1} <input type="text" id="question${i}" class="form-input" value="${question}"></p>`;
 }
 
+// ex. 08:00 -> 28800000
+function getMsFromMidnight(timeStr) {
+  const [hours, minutes] = timeStr.split(":");
+  return hours * 60 * 60 * 1000 + minutes * 60 * 1000;
+}

@@ -1,0 +1,6 @@
+- [ ] Test saving reminder time as ms since midnight
+- [ ] Create habit daily recording screen
+- [ ] Save records to CSV (date (YYYY-MM-DD), question, response (1 or 0))
+- [ ] Reset alarm for the next day
+- [ ] Make sure CSV can be downloaded
+- [ ] Determine what happens if questions are changed from AL interface

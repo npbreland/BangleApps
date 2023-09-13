@@ -6,6 +6,7 @@
   "tags": "",
   "supports" : ["BANGLEJS2"],  
   "readme": "README.md",
+  "dependencies": {"scheduler": "type"},
   "interface": "interface.html",
   "custom": "custom.html",
   "storage": [

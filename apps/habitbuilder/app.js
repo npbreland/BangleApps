@@ -1,39 +1,74 @@
-// place your const, vars, functions or classes here
-const storage = require("Storage");
-const FILENAME = "habitbuilder.json";
+const Storage = require("Storage");
+const Layout = require("Layout");
 
-if (!storage.read(FILENAME)) {
-  storage.writeJSON(FILENAME, {});
+const filename = "habitbuilder.json";
+const data = Storage.readJSON(filename);
+
+const questions = Object.keys(data.questions);
+
+function showQuestion(questionIdx) {
+  const layout = new Layout( {
+    type: "v", c: [
+      {type:"txt", wrap: true, fillx: 1, height: 50, font:"6x8:2", label:questions[questionIdx], id:questionIdx},
+      {type: "h", c: [
+        {type:"btn", font:"6x8:2", pad:2, width: 75, label:"Yes", cb: l=>setAnswer(questionIdx, true) },
+        {type:"btn", font:"6x8:2", pad:2, width: 75, label:"No", cb: l=>setAnswer(questionIdx, false) }
+      ]}
+    ]
+  });
+  g.clear();
+  layout.render();
 }
 
-// clear the screen
-g.clear();
-
-var n = 0;
-
-// redraw the screen
-function draw() {
-  g.reset().clearRect(Bangle.appRect);
-  g.setFont("6x8").setFontAlign(0,0).drawString("Up / Down",g.getWidth()/2,g.getHeight()/2 - 20);
-  g.setFont("Vector",60).setFontAlign(0,0).drawString(n,g.getWidth()/2,g.getHeight()/2 + 30);
+function getDateString(date) {
+  return date.toISOString().substr(0,10);
 }
 
-// Respond to user input
-Bangle.setUI({mode: "updown"}, function(dir) {
-  if (dir<0) {
-    n--;
-    draw();
-  } else if (dir>0) {
-    n++;
-    draw();
+function setAnswer(questionIdx, answer) {
+  const date = new Date();
+  const dateStr = getDateString(date);
+  data.questions[questions[questionIdx]].responses[dateStr] = answer;
+  if (questions[questionIdx + 1]) {
+    showQuestion(questionIdx + 1);
   } else {
-    n = 0;
-    draw();
+    Storage.writeJSON(filename, data);
+    E.showMessage("All done for today!");
   }
-});
+}
 
-// First draw...
-draw();
+/*
+Might use these for a widget later
+
+function getFeaturedQuestion() {
+  const entries = Object.entries(questionData);
+  let question, data;
+  for (let i = 0; i < entries.length; i++) {
+    question = entries[i][0];
+    data = entries[i][1];
+    if (data.featured === true) {
+      return question;
+    }
+  }
+  return false;
+}
+
+
+function getStreak(question, endDate) {
+  const responses = questionData[question].responses;
+  let streak = 0;
+  const date = endDate;
+  let dateString = getDateString(date);
+
+  while (responses[dateString] && responses[dateString] === true) {
+    streak++;
+    date.setDate(date.getDate() - 1);
+    dateString = getDateString(date);
+  }
+  return streak;
+}
+*/
+
+showQuestion(0);
 
 // Load widgets
 Bangle.loadWidgets();

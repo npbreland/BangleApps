@@ -1,10 +1,10 @@
 const Storage = require("Storage");
 const Layout = require("Layout");
 
-const filename = "settings.json";
+const filename = "habitbuilder.settings.json";
 const settings = Storage.readJSON(filename);
 
-const dataFile = Storage.open("data.csv", "a");
+const dataFile = Storage.open("habitbuilder.data.csv", "a");
 
 function showQuestion(questionIdx) {
   const layout = new Layout( {

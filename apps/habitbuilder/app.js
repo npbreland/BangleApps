@@ -29,10 +29,10 @@ function setAnswer(questionIdx, answer) {
   const dateStr = getDateString(date);
   const question = settings.questions[questionIdx];
 
-  const data = [questions, dateStr, answer];
+  const data = [question, dateStr, answer];
   dataFile.write(data.join(",") + "\n");
 
-  if (questions[questionIdx + 1]) {
+  if (settings.questions[questionIdx + 1]) {
     showQuestion(questionIdx + 1);
   } else {
     E.showMessage("All done for today!");

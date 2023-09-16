@@ -25,6 +25,8 @@
         }
         const content = JSON.stringify(settings);
 
+        console.log(content);
+
         sendCustomizedApp({
           storage:[
             {name:"habitbuilder.settings.json", url:"settings.json", content },

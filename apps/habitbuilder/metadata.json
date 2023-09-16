@@ -14,7 +14,7 @@
     {"name":"habitbuilder.img","url":"app-icon.js","evaluate":true}
   ],
   "data": [
-    {"name":"settings.json","url":"habitbuilder.settings.json"},
-    {"name":"data.csv","url":"habitbuilder.data.csv"}
+    {"name":"habitbuilder.settings.json","url":"settings.json"},
+    {"name":"habitbuilder.data.csv","url":"data.csv", "storageFile": true}
   ]
 }

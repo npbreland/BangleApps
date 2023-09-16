@@ -1,18 +1,18 @@
 const Storage = require("Storage");
 const Layout = require("Layout");
 
-const filename = "habitbuilder.json";
-const data = Storage.readJSON(filename);
+const filename = "settings.json";
+const settings = Storage.readJSON(filename);
 
-const questions = Object.keys(data.questions);
+const dataFile = Storage.open("data.csv", "a");
 
 function showQuestion(questionIdx) {
   const layout = new Layout( {
     type: "v", c: [
-      {type:"txt", wrap: true, fillx: 1, height: 50, font:"6x8:2", label:questions[questionIdx], id:questionIdx},
+      {type:"txt", wrap: true, fillx: 1, height: 50, font:"6x8:2", label:settings.questions[questionIdx], id:questionIdx},
       {type: "h", c: [
-        {type:"btn", font:"6x8:2", pad:2, width: 75, label:"Yes", cb: l=>setAnswer(questionIdx, true) },
-        {type:"btn", font:"6x8:2", pad:2, width: 75, label:"No", cb: l=>setAnswer(questionIdx, false) }
+        {type:"btn", font:"6x8:2", pad:2, width: 75, label:"Yes", cb: l=>setAnswer(questionIdx, 1) },
+        {type:"btn", font:"6x8:2", pad:2, width: 75, label:"No", cb: l=>setAnswer(questionIdx, 0) }
       ]}
     ]
   });
@@ -27,11 +27,14 @@ function getDateString(date) {
 function setAnswer(questionIdx, answer) {
   const date = new Date();
   const dateStr = getDateString(date);
-  data.questions[questions[questionIdx]].responses[dateStr] = answer;
+  const question = settings.questions[questionIdx];
+
+  const data = [questions, dateStr, answer];
+  dataFile.write(data.join(",") + "\n");
+
   if (questions[questionIdx + 1]) {
     showQuestion(questionIdx + 1);
   } else {
-    Storage.writeJSON(filename, data);
     E.showMessage("All done for today!");
   }
 }

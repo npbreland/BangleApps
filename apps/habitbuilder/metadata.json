@@ -1,7 +1,7 @@
 { "id": "habitbuilder",
   "name": "Habit Builder",
   "version":"0.01",
-  "description": "Daily reminders to develop habits",
+  "description": "Daily reminder to help track and (hopefully) develop habits",
   "icon": "app.png",
   "tags": "",
   "supports" : ["BANGLEJS2"],  
@@ -12,5 +12,9 @@
   "storage": [
     {"name":"habitbuilder.app.js","url":"app.js"},
     {"name":"habitbuilder.img","url":"app-icon.js","evaluate":true}
+  ],
+  "data": [
+    {"name":"settings.json","url":"habitbuilder.settings.json"},
+    {"name":"data.csv","url":"habitbuilder.data.csv"}
   ]
 }

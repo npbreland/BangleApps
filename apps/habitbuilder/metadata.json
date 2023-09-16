@@ -11,10 +11,10 @@
   "custom": "custom.html",
   "storage": [
     {"name":"habitbuilder.app.js","url":"app.js"},
-    {"name":"habitbuilder.img","url":"app-icon.js","evaluate":true}
+    {"name":"habitbuilder.img","url":"app-icon.js","evaluate":true},
+    {"name":"habitbuilder.settings.json","url":"settings.json"}
   ],
   "data": [
-    {"name":"habitbuilder.settings.json","url":"settings.json"},
     {"name":"habitbuilder.data.csv","url":"data.csv", "storageFile": true}
   ]
 }

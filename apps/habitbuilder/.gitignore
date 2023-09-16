@@ -170,6 +170,3 @@ dist
 
 # IntelliJ based IDEs
 .idea
-
-data.csv
-settings.json

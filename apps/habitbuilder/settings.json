@@ -1,0 +1,9 @@
+{
+    "reminderTime": "10:30",
+    "questions": [
+        "Did you take your medicine?", 
+        "Did you study German?",
+        "Did you stand up at your desk at least half the day?",
+        "Did you exercise?"       
+    ]
+}

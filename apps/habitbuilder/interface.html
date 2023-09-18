@@ -3,15 +3,20 @@
     <link rel="stylesheet" href="../../css/spectre.min.css">
   </head>
   <body>
+    <button id="download-csv" class="btn btn-default">Download CSV</button>
+    <button id="clear-csv" class="btn btn-danger">Clear CSV</button>
     <h2>Settings</h2>
     <div id="settings"></div>
-    <button class="btn btn-default" id="btnSave">Save</button>
+    <button class="btn btn-primary" id="btnSave">Save</button>
 
     <script src="../../core/lib/interface.js"></script>
     <script src="settings-form.js"></script>
+    <script src="csv.js"></script>
     <script>
 
-const FILENAME = "habitbuilder.settings.json";
+
+const SETTINGS_FILE = "habitbuilder.settings.json";
+
 const settingsElement = document.getElementById("settings");
 
 function disableFormInput() {
@@ -19,10 +24,10 @@ function disableFormInput() {
   document.querySelectorAll(".btn").forEach(el => el.disabled = true);
 }
 
-function getData() {
+function getSettings() {
   // show loading window
   Util.showModal("Loading...");
-  Util.readStorage(FILENAME, data=>{
+  Util.readStorage(SETTINGS_FILE, data=>{
     const settings = JSON.parse(data || "[]");
 
     // remove window
@@ -48,7 +53,7 @@ function getData() {
 
 // Called when app starts
 function onInit() {
-  getData();
+  getSettings();
 }
     </script>
   </body>

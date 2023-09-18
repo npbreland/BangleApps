@@ -5,7 +5,7 @@ var dataFile = require("Storage").open("habitbuilder.data.csv", "a");
 var layout = new Layout(
   {
     type: "v", c: [
-        {type:"txt", wrap: true, fillx: 1, height: 50, font:"6x8:2", label:settings.questions[0], id:"question"},
+        {type:"txt", wrap: true, fillx: 1, filly: 1, font:"6x8:2", label:settings.questions[0], id:"question"},
       ],
   },
   {
@@ -42,8 +42,43 @@ function setAnswer(questionIdx, answer) {
   } else {
     Bangle.setUI();
     E.showMessage("All done for today!");
+    setTimeout(() => {
+      Bangle.showClock();
+    }, 2000);
   }
 }
 
 g.clear();
 drawQuestion(0);
+
+/*
+Might use these for a widget later
+
+function getFeaturedQuestion() {
+  const entries = Object.entries(questionData);
+  let question, data;
+  for (let i = 0; i < entries.length; i++) {
+    question = entries[i][0];
+    data = entries[i][1];
+    if (data.featured === true) {
+      return question;
+    }
+  }
+  return false;
+}
+
+
+function getStreak(question, endDate) {
+  const responses = questionData[question].responses;
+  let streak = 0;
+  const date = endDate;
+  let dateString = getDateString(date);
+
+  while (responses[dateString] && responses[dateString] === true) {
+    streak++;
+    date.setDate(date.getDate() - 1);
+    dateString = getDateString(date);
+  }
+  return streak;
+}
+*/

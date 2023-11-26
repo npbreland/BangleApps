@@ -51,8 +51,17 @@ function getSettings() {
   });
 }
 
+let csvData = '';
+
+function getData() {
+  Util.readStorage('habitbuilder.data.csv', data => {
+    csvData = data.trim();
+  });
+}
+
 // Called when app starts
 function onInit() {
+  getData();
   getSettings();
 }
     </script>

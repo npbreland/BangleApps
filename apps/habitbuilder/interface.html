@@ -56,6 +56,7 @@ let csvData = '';
 function getData() {
   Util.readStorage('habitbuilder.data.csv', data => {
     csvData = data.trim();
+    console.log(csvData);
   });
 }
 

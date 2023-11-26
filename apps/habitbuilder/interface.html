@@ -3,68 +3,63 @@
     <link rel="stylesheet" href="../../css/spectre.min.css">
   </head>
   <body>
-    <button id="download-csv" class="btn btn-default">Download CSV</button>
-    <button id="clear-csv" class="btn btn-danger">Clear CSV</button>
-    <h2>Settings</h2>
-    <div id="settings"></div>
-    <button class="btn btn-primary" id="btnSave">Save</button>
+    <div id="data"></div>
+    <button class="btn btn-default" id="btnSave">Save</button>
+    <button class="btn btn-default" id="btnDelete">Delete</button>
 
     <script src="../../core/lib/interface.js"></script>
-    <script src="settings-form.js"></script>
-    <script src="csv.js"></script>
     <script>
-
-
-const SETTINGS_FILE = "habitbuilder.settings.json";
-
-const settingsElement = document.getElementById("settings");
-
-function disableFormInput() {
-  document.querySelectorAll(".form-input").forEach(el => el.disabled = true);
-  document.querySelectorAll(".btn").forEach(el => el.disabled = true);
-}
-
-function getSettings() {
-  // show loading window
-  Util.showModal("Loading...");
-  Util.readStorage(SETTINGS_FILE, data=>{
-    const settings = JSON.parse(data || "[]");
-
-    // remove window
-    Util.hideModal();
-
-    // build settings form
-    settingsHtml = buildSettingsForm(settings.questions, settings.reminderTime);
-    settingsElement.innerHTML = settingsHtml;
-
-    document.getElementById("btnSave").addEventListener("click", function() {
-      // Get questions
-      const settings = getSettingsFromForm();
-      if (!settings) {
-        return;
-      }
-      disableFormInput();
-      Util.writeStorage(FILENAME, JSON.stringify(settings), () => {
-        location.reload(); // reload so we see current data
-      });
-    });
-  });
-}
-
-let csvData = '';
+var dataElement = document.getElementById("data");
+var csvData = "";
 
 function getData() {
-  Util.readStorage('habitbuilder.data.csv', data => {
+  // show loading window
+  Util.showModal("Loading...");
+  // get the data
+  dataElement.innerHTML = "";
+  Util.readStorageFile('habitbuilder.data.csv',data=>{
     csvData = data.trim();
-    console.log(csvData);
+    // remove window
+    Util.hideModal();
+    // If no data, report it and exit
+    if (data.length==0) {
+      dataElement.innerHTML = "<b>No data found</b>";
+      return;
+    }
+    // Otherwise parse the data and output it as a table
+    dataElement.innerHTML = `<table>
+    <tr>
+      <th>Question</th>
+      <th>Date</th>
+      <th>Answer</th>
+    </tr>`+data.trim().split("\n").map(l=>{
+      l = l.split(",");
+      return `<tr>
+      <td>${l[0]}</td>
+      <td>${l[1]}</td>
+      <td>${l[2]}</td>
+      </tr>`
+    }).join("\n")+"</table>";
   });
 }
 
+// You can call a utility function to save the data
+document.getElementById("btnSave").addEventListener("click", function() {
+  Util.saveCSV("habitbuilder", csvData);
+});
+// Or you can also delete the file
+document.getElementById("btnDelete").addEventListener("click", function() {
+  Util.showModal("Deleting...");
+  Util.eraseStorageFile("habitbuilder.data.csv", function() {
+    Util.hideModal();
+    getData();
+  });
+});
 // Called when app starts
 function onInit() {
   getData();
-  getSettings();
 }
+
     </script>
   </body>
 </html>

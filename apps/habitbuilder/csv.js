@@ -3,10 +3,7 @@ const CSV_HEADER = "date,question,response\n";
 // Cleans the CSV data by removing duplicate entries
 document.addEventListener('click', function (event) {
   if (event.target.id === 'download-csv') {
-    Util.readStorage("habitbuilder.data.csv", data=>{
-      console.log(data);
-    });
-
+    Util.saveCSV("habitbuilder.data.csv");
     return;
     // String representation of the CSV post-cleaning
     let cleanCsvStr = CSV_HEADER;

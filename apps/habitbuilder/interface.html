@@ -3,11 +3,16 @@
     <link rel="stylesheet" href="../../css/spectre.min.css">
   </head>
   <body>
+    <h2>Data</h2>
     <div id="data"></div>
     <button class="btn btn-default" id="btnSave">Save</button>
     <button class="btn btn-default" id="btnDelete">Delete</button>
+    <h2>Settings</h2>
+    <div id="settings"></div>
+    <button class="btn btn-primary" id="btnSaveSettings">Save settings</button>
 
     <script src="../../core/lib/interface.js"></script>
+    <script src="settings-form.js"></script>
     <script>
 var dataElement = document.getElementById("data");
 var csvData = "";
@@ -43,6 +48,34 @@ function getData() {
   });
 }
 
+function getSettings() {
+  // show loading window
+  Util.showModal("Loading...");
+  Util.readStorage('habitbuilder.settings.json', data=>{
+    const settings = JSON.parse(data || "[]");
+
+    // remove window
+    Util.hideModal();
+
+    // build settings form
+    settingsHtml = buildSettingsForm(settings.questions, settings.reminderTime);
+    settingsElement.innerHTML = settingsHtml;
+
+    document.getElementById("btnSaveSettings").addEventListener("click", function() {
+      // Get questions
+      const settings = getSettingsFromForm();
+      if (!settings) {
+        return;
+      }
+      disableFormInput();
+      Util.writeStorage('habitbuilder.settings.json', JSON.stringify(settings), () => {
+        location.reload(); // reload so we see current data
+      });
+    });
+  });
+}
+
+
 // You can call a utility function to save the data
 document.getElementById("btnSave").addEventListener("click", function() {
   Util.saveCSV("habitbuilder", csvData);
@@ -58,6 +91,7 @@ document.getElementById("btnDelete").addEventListener("click", function() {
 // Called when app starts
 function onInit() {
   getData();
+  getSettings();
 }
 
     </script>

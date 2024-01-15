@@ -60,7 +60,7 @@ function getSettings() {
 
     // build settings form
     settingsHtml = buildSettingsForm(settings.questions, settings.reminderTime);
-    settingsElement.innerHTML = settingsHtml;
+    document.getElementById("settings").innerHTML = settingsHtml;
 
     document.getElementById("btnSaveSettings").addEventListener("click", function() {
       // Get questions

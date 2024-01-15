@@ -1,4 +1,4 @@
-# App Name
+# Habit Builder
 
 More information on making apps:
 

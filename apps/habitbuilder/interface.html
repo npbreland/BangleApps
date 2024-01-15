@@ -68,7 +68,7 @@ function getSettings() {
       if (!settings) {
         return;
       }
-      disableFormInput();
+      //disableFormInput();
       Util.writeStorage('habitbuilder.settings.json', JSON.stringify(settings), () => {
         location.reload(); // reload so we see current data
       });

@@ -15,6 +15,6 @@
   ],
   "data": [
     {"name":"habitbuilder.data.csv","url":"data.csv", "storageFile": true},
-    {"name":"habitbuilder.settings.json"}
+    {"name":"habitbuilder.settings.json", "url":"settings.json", "storageFile": true}
   ]
 }

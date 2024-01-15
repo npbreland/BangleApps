@@ -52,6 +52,7 @@ function getSettings() {
   // show loading window
   Util.showModal("Loading...");
   Util.readStorageFile('habitbuilder.settings.json', data=>{
+    console.log("Settings: "+data);
     const settings = JSON.parse(data || "[]");
 
     // remove window

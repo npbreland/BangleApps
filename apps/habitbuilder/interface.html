@@ -19,7 +19,7 @@ var csvData = "";
 
 function getData() {
   // show loading window
-  Util.showModal("Loading...");
+  //Util.showModal("Loading...");
   // get the data
   dataElement.innerHTML = "";
   Util.readStorageFile('habitbuilder.data.csv',data=>{
@@ -55,9 +55,6 @@ function getSettings() {
     console.log("Settings: "+data);
     const settings = JSON.parse(data || "[]");
 
-    // remove window
-    Util.hideModal();
-
     // build settings form
     settingsHtml = buildSettingsForm(settings.questions, settings.reminderTime);
     document.getElementById("settings").innerHTML = settingsHtml;
@@ -73,6 +70,8 @@ function getSettings() {
         location.reload(); // reload so we see current data
       });
     });
+
+    getData();
   });
 }
 
@@ -92,7 +91,6 @@ document.getElementById("btnDelete").addEventListener("click", function() {
 });
 // Called when app starts
 function onInit() {
-  //getData();
   getSettings();
 }
 

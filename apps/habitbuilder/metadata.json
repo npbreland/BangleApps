@@ -11,6 +11,7 @@
   "custom": "custom.html",
   "storage": [
     {"name":"habitbuilder.app.js","url":"app.js"},
+    {"name":"habitbuilder.boot.js","url":"boot.js"},
     {"name":"habitbuilder.img","url":"app-icon.js","evaluate":true}
   ],
   "data": [

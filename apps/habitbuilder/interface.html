@@ -51,7 +51,7 @@ function getData() {
 function getSettings() {
   // show loading window
   Util.showModal("Loading...");
-  Util.readStorage('settings.json', data=>{
+  Util.readStorage('habitbuilder.settings.json', data=>{
     console.log("Settings: "+data);
     const settings = JSON.parse(data || "[]");
 

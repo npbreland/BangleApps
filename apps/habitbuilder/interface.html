@@ -7,7 +7,7 @@
     <div id="data"></div>
     <button class="btn btn-default" id="btnSave">Save</button>
     <button class="btn btn-default" id="btnDelete">Delete</button>
-    <h2>Settings</h2>
+    <h2 style="margin-top: 20px">Settings</h2>
     <div id="settings"></div>
     <button class="btn btn-primary" id="btnSaveSettings">Save settings</button>
 
@@ -76,17 +76,18 @@ function getSettings() {
   });
 }
 
-
 // You can call a utility function to save the data
 document.getElementById("btnSave").addEventListener("click", function() {
-  Util.saveCSV("habitbuilder", csvData);
+  Util.readStorageFile('habitbuilder.data.csv',data=>{
+    csvData = data.trim();
+    Util.saveCSV("habitbuilder", csvData);
+  });
 });
 // Or you can also delete the file
 document.getElementById("btnDelete").addEventListener("click", function() {
   Util.showModal("Deleting...");
   Util.eraseStorageFile("habitbuilder.data.csv", function() {
     Util.hideModal();
-    getData();
   });
 });
 // Called when app starts

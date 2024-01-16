@@ -6,7 +6,9 @@ function buildSettingsForm(questions = [], reminderTime = "") {
     settingsHtml += questionComponent(question, i);
   }
 
-  settingsHtml += `<p>Reminder time <input type="time" id="remindertime" class="form-input" value="${reminderTime}"></p>`;
+  const time = getTimeFromMs(reminderTime);
+
+  settingsHtml += `<p>Reminder time <input type="time" id="remindertime" class="form-input" value="${time}"></p>`;
   return settingsHtml;
 }
 
@@ -38,4 +40,10 @@ function questionComponent(question, i) {
 function getMsFromMidnight(timeStr) {
   const [hours, minutes] = timeStr.split(":");
   return hours * 60 * 60 * 1000 + minutes * 60 * 1000;
+}
+
+function getTimeFromMs(ms) {
+  const hours = Math.floor(ms / (60 * 60 * 1000));
+  const minutes = Math.floor((ms % (60 * 60 * 1000)) / (60 * 1000));
+  return `${hours}:${minutes}`;
 }

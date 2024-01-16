@@ -4,3 +4,4 @@ require("sched").setAlarm("habitbuilder", {
   t: require("Storage").readJSON('habitbuilder.settings.json').reminderTime,
   rp: true
 });
+require("sched").reload();

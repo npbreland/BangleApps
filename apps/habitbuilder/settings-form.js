@@ -47,3 +47,9 @@ function getTimeFromMs(ms) {
   const minutes = Math.floor((ms % (60 * 60 * 1000)) / (60 * 1000));
   return `${hours}:${minutes}`;
 }
+
+function disableFormInput() {
+  document.querySelectorAll(".form-input").forEach(el => el.disabled = true);
+  document.querySelectorAll(".btn").forEach(el => el.disabled = true);
+}
+

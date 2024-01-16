@@ -18,6 +18,7 @@
 
       // When the 'upload' button is clicked...
       document.getElementById("upload").addEventListener("click", function() {
+        disableFormInput();
 
         const settings = getSettingsFromForm();
         if (!settings) {

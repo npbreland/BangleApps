@@ -17,9 +17,38 @@
 var dataElement = document.getElementById("data");
 var csvData = "";
 
-function getData() {
+function getSettings() {
   // show loading window
-  //Util.showModal("Loading...");
+  Util.showModal("Loading...");
+  Util.readStorage('habitbuilder.settings.json', data=>{
+    console.log("Settings: "+data);
+    const settings = JSON.parse(data || "[]");
+
+    // build settings form
+    settingsHtml = buildSettingsForm(settings.questions, settings.reminderTime);
+    document.getElementById("settings").innerHTML = settingsHtml;
+
+    document.getElementById("btnSaveSettings").addEventListener("click", function() {
+
+      disableFormInput();
+
+      // Get questions
+      const settings = getSettingsFromForm();
+      if (!settings) {
+        return;
+      }
+
+      Util.writeStorage('habitbuilder.settings.json', JSON.stringify(settings), () => {
+        location.reload(); // reload so we see current data
+      });
+    });
+
+    // Didn't work in onInit, so call it here
+    getData();
+  });
+}
+
+function getData() {
   // get the data
   dataElement.innerHTML = "";
   Util.readStorageFile('habitbuilder.data.csv',data=>{
@@ -32,7 +61,7 @@ function getData() {
       return;
     }
     // Otherwise parse the data and output it as a table
-    dataElement.innerHTML = `<table>
+    dataElement.innerHTML = `<table class="table" style="margin-bottom: 10px">
     <tr>
       <th>Question</th>
       <th>Date</th>
@@ -48,47 +77,19 @@ function getData() {
   });
 }
 
-function getSettings() {
-  // show loading window
-  Util.showModal("Loading...");
-  Util.readStorage('habitbuilder.settings.json', data=>{
-    console.log("Settings: "+data);
-    const settings = JSON.parse(data || "[]");
-
-    // build settings form
-    settingsHtml = buildSettingsForm(settings.questions, settings.reminderTime);
-    document.getElementById("settings").innerHTML = settingsHtml;
-
-    document.getElementById("btnSaveSettings").addEventListener("click", function() {
-      // Get questions
-      const settings = getSettingsFromForm();
-      if (!settings) {
-        return;
-      }
-      //disableFormInput();
-      Util.writeStorage('habitbuilder.settings.json', JSON.stringify(settings), () => {
-        location.reload(); // reload so we see current data
-      });
-    });
-
-    getData();
-  });
-}
-
 // You can call a utility function to save the data
 document.getElementById("btnSave").addEventListener("click", function() {
-  Util.readStorageFile('habitbuilder.data.csv',data=>{
-    csvData = data.trim();
-    Util.saveCSV("habitbuilder", csvData);
-  });
+  Util.saveCSV("habitbuilder", csvData);
 });
 // Or you can also delete the file
 document.getElementById("btnDelete").addEventListener("click", function() {
   Util.showModal("Deleting...");
   Util.eraseStorageFile("habitbuilder.data.csv", function() {
     Util.hideModal();
+    getData();
   });
 });
+
 // Called when app starts
 function onInit() {
   getSettings();
